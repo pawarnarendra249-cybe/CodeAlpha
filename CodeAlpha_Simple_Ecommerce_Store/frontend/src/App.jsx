@@ -13,36 +13,36 @@ function App() {
     {
       name: "Home Decoration",
       image: "/images/home-decoration.png",
+      icon: "home",
     },
     {
       name: "Gym Equipment",
       image: "/images/gym-equipment.png",
+      icon: "fitness_center",
     },
     {
       name: "Laptop",
       image: "/images/laptop.png",
+      icon: "laptop",
     },
     {
       name: "Fashion Dress",
       image: "/images/fashion-dress.png",
+      icon: "checkroom",
     },
     {
       name: "Beauty Products",
       image: "/images/beauty-products.png",
+      icon: "spa",
     },
   ];
 
   const featuredImages = [
     "https://static.vecteezy.com/system/resources/previews/024/495/291/non_2x/stylish-and-modern-boho-inspired-living-room-with-carpet-rattan-furniture-pillows-plants-wall-decoration-and-personal-accessories-natural-home-decor-boho-room-interior-ai-generated-image-free-photo.jpg",
-
     "https://static.vecteezy.com/system/resources/thumbnails/035/234/375/small_2x/ai-generated-gym-equipment-pro-photo.jpg",
-
     "https://bouttowear.com/cdn/shop/articles/5-fashion-trends-to-look-for-while-shopping-online.png?v=1729963111",
-
     "https://tse4.mm.bing.net/th/id/OIP.g5D9Y3LUpF6zcmcrfRpu8wHaEJ?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
-
-   "https://tse2.mm.bing.net/th/id/OIP.uM1uNMpEcJEJPkJR661xvAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-
+    "https://tse2.mm.bing.net/th/id/OIP.uM1uNMpEcJEJPkJR661xvAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
   ];
 
   const [customer, setCustomer] = useState({
@@ -170,388 +170,718 @@ function App() {
     }
   };
 
-  return (
-    <div>
-      {orderSuccess ? (
-        <div className="success-page">
-          <div className="success-box">
-            <span className="material-symbols-outlined success-icon">
-              check_circle
+  const goHome = () => {
+    setShowCart(false);
+    setShowCheckout(false);
+    setSelectedCategory(null);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const goProducts = () => {
+    setShowCart(false);
+    setShowCheckout(false);
+
+    setTimeout(() => {
+      document.getElementById("products")?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 50);
+  };
+
+  const goCategories = () => {
+    setShowCart(false);
+    setShowCheckout(false);
+
+    setTimeout(() => {
+      document.getElementById("categories")?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 50);
+  };
+
+  if (orderSuccess) {
+    return (
+      <div className="success-page">
+        <div className="success-box">
+          <div className="success-circle">
+            <span className="material-symbols-outlined">
+              check
             </span>
-
-            <h1>Order Placed Successfully!</h1>
-
-            <p>Thank you for your order.</p>
-
-            <p>
-              Order ID:
-              <strong> {orderSuccess._id}</strong>
-            </p>
-
-            <p>
-              Total Amount:
-              <strong> ₹{orderSuccess.totalAmount}</strong>
-            </p>
-
-            <button onClick={() => setOrderSuccess(null)}>
-              Continue Shopping
-            </button>
-          </div>
-        </div>
-      ) : (
-        <>
-          {/* TOP BAR */}
-          <div className="topbar">
-            <span>🚚 Free Delivery on Orders Above ₹999</span>
-            <span>🔥 New Deals Every Day</span>
-            <span>📦 Easy Returns</span>
           </div>
 
-          {/* MAIN NAVBAR */}
-          <nav className="main-navbar">
-            <div className="navbar-logo">
-              <span className="material-symbols-outlined">
-                storefront
-              </span>
+          <span className="success-label">ORDER CONFIRMED</span>
 
-              <h2>My Store</h2>
+          <h1>Order Placed Successfully!</h1>
+
+          <p>
+            Thank you for shopping with <strong>Baazaar</strong>.
+          </p>
+
+          <div className="order-summary">
+            <div>
+              <span>Order ID</span>
+              <strong>{orderSuccess._id}</strong>
             </div>
 
-            <div className="navbar-menu">
-              <a
-                href="#home"
-                onClick={(e) => {
-                  e.preventDefault();
+            <div>
+              <span>Total Amount</span>
+              <strong>₹{orderSuccess.totalAmount}</strong>
+            </div>
+          </div>
 
-                  setShowCart(false);
-                  setShowCheckout(false);
-                  setSelectedCategory(null);
+          <button
+            className="primary-btn"
+            onClick={() => setOrderSuccess(null)}
+          >
+            <span className="material-symbols-outlined">
+              shopping_bag
+            </span>
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-                  window.scrollTo({
-                    top: 0,
-                    behavior: "smooth",
-                  });
-                }}
-              >
+  return (
+    <div className="app">
+      {/* TOP BAR */}
+      <div className="topbar">
+        <div>
+          <span>🚚 Free Delivery on Orders Above ₹999</span>
+        </div>
+
+        <div className="topbar-right">
+          <span>Easy Returns</span>
+          <span>Secure Shopping</span>
+          <span>24/7 Support</span>
+        </div>
+      </div>
+
+      {/* NAVBAR */}
+      <nav className="main-navbar">
+        <button className="brand" onClick={goHome}>
+          <div className="brand-icon">
+            <span className="material-symbols-outlined">
+              storefront
+            </span>
+          </div>
+
+          <div>
+            <h1>BAAZAAR</h1>
+            <span>SHOP • CHOOSE • ENJOY</span>
+          </div>
+        </button>
+
+        <div className="navbar-menu">
+          <button
+            className="nav-link active"
+            onClick={goHome}
+          >
+            <span className="material-symbols-outlined">
+              home
+            </span>
+            Home
+          </button>
+
+          <button
+            className="nav-link"
+            onClick={goProducts}
+          >
+            <span className="material-symbols-outlined">
+              shopping_bag
+            </span>
+            Products
+          </button>
+
+          <button
+            className="nav-link"
+            onClick={goCategories}
+          >
+            <span className="material-symbols-outlined">
+              category
+            </span>
+            Categories
+          </button>
+
+          <button
+            className="cart-nav-btn"
+            onClick={() => {
+              setShowCart(true);
+              setShowCheckout(false);
+            }}
+          >
+            <span className="material-symbols-outlined">
+              shopping_cart
+            </span>
+
+            <span>Cart</span>
+
+            {cartCount > 0 && (
+              <b>{cartCount}</b>
+            )}
+          </button>
+
+          <button className="menu-btn">
+            <span className="material-symbols-outlined">
+              menu
+            </span>
+          </button>
+        </div>
+      </nav>
+
+      {/* OFFER BAR */}
+      <div className="offer-bar">
+        <div className="offer-content">
+          <span>🔥 50% OFF ON FASHION</span>
+          <span>💻 LAPTOP SPECIAL DEALS</span>
+          <span>🏠 HOME DECORATION SALE</span>
+          <span>🏋️ GYM EQUIPMENT OFFERS</span>
+          <span>✨ NEW COLLECTION ARRIVED</span>
+        </div>
+      </div>
+
+      {!showCart ? (
+        <>
+          {/* HERO */}
+          <section className="hero-section">
+            <div className="hero-content">
+              <span className="hero-tag">
+                ✨ EVERYTHING YOU NEED, ALL IN ONE PLACE
+              </span>
+
+              <h1>
+                Shop Smart.
+                <br />
+                <span>Live Better.</span>
+              </h1>
+
+              <p>
+                Discover quality products, amazing deals and
+                everyday essentials — all at one place.
+              </p>
+
+              <div className="hero-buttons">
+                <button
+                  className="hero-primary"
+                  onClick={goProducts}
+                >
+                  Shop Now
+                  <span className="material-symbols-outlined">
+                    arrow_forward
+                  </span>
+                </button>
+
+                <button
+                  className="hero-secondary"
+                  onClick={goCategories}
+                >
+                  Explore Categories
+                </button>
+              </div>
+
+              <div className="hero-stats">
+                <div>
+                  <strong>500+</strong>
+                  <span>Products</span>
+                </div>
+
+                <div>
+                  <strong>5</strong>
+                  <span>Categories</span>
+                </div>
+
+                <div>
+                  <strong>100%</strong>
+                  <span>Secure</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="hero-visual">
+              <div className="hero-card hero-card-main">
+                <img
+                  src={featuredImages[0]}
+                  alt="Home Decoration"
+                />
+              </div>
+
+              <div className="floating-card floating-one">
                 <span className="material-symbols-outlined">
-                  home
+                  local_shipping
                 </span>
-                Home
-              </a>
+                <div>
+                  <strong>Free Delivery</strong>
+                  <small>Orders above ₹999</small>
+                </div>
+              </div>
 
-              <a
-                href="#products"
-                onClick={(e) => {
-                  e.preventDefault();
+              <div className="floating-card floating-two">
+                <strong>50%</strong>
+                <span>OFF</span>
+              </div>
+            </div>
+          </section>
 
-                  setShowCart(false);
-                  setShowCheckout(false);
+         
 
-                  document
-                    .getElementById("products")
-                    ?.scrollIntoView({
-                      behavior: "smooth",
-                    });
-                }}
-              >
+          {/* FEATURED */}
+          <section className="featured-section">
+            <div className="featured-header">
+              <div>
+                <span className="eyebrow">
+                  TRENDING NOW
+                </span>
+
+                <h2>Featured Collection</h2>
+              </div>
+
+              <button onClick={goProducts}>
+                View All
                 <span className="material-symbols-outlined">
-                  shopping_bag
+                  arrow_forward
                 </span>
+              </button>
+            </div>
+
+            <div className="featured-products">
+              {featuredImages.map((image, index) => (
+                <div
+                  className="featured-product"
+                  key={index}
+                >
+                  <img
+                    src={image}
+                    alt={`Featured Product ${index + 1}`}
+                  />
+
+                  <div className="featured-overlay">
+                    <span>EXPLORE</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* PRODUCTS */}
+          <main
+            className="products-section"
+            id="products"
+          >
+            <div className="products-heading">
+              <div>
+                <span className="eyebrow">
+                  OUR COLLECTION
+                </span>
+
+                <h2>
+                  {selectedCategory
+                    ? selectedCategory
+                    : "Popular Products"}
+                </h2>
+              </div>
+
+              <span className="product-count">
+                {
+                  products.filter(
+                    (product) =>
+                      !selectedCategory ||
+                      product.category === selectedCategory
+                  ).length
+                }{" "}
                 Products
-              </a>
+              </span>
+            </div>
 
-              <a
-                href="#categories"
-                onClick={(e) => {
-                  e.preventDefault();
+            <div className="product-grid">
+              {products
+                .filter(
+                  (product) =>
+                    !selectedCategory ||
+                    product.category === selectedCategory
+                )
+                .map((product) => (
+                  <div
+                    className="product-card"
+                    key={product._id}
+                  >
+                    <div className="product-image-wrapper">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                      />
 
-                  document
-                    .getElementById("categories")
-                    ?.scrollIntoView({
-                      behavior: "smooth",
-                    });
-                }}
-              >
+                      <span className="product-badge">
+                        NEW
+                      </span>
+                    </div>
+
+                    <div className="product-info">
+                      <span className="product-category">
+                        {product.category}
+                      </span>
+
+                      <h3>{product.name}</h3>
+
+                      <p className="product-description">
+                        {product.description}
+                      </p>
+
+                      <div className="product-bottom">
+                        <div>
+                          <span className="price">
+                            ₹{product.price}
+                          </span>
+
+                          <span className="stock">
+                            {product.stock > 0
+                              ? "In Stock"
+                              : "Out of Stock"}
+                          </span>
+                        </div>
+
+                        <button
+                          className="add-cart-btn"
+                          onClick={() =>
+                            addToCart(product)
+                          }
+                        >
+                          <span className="material-symbols-outlined">
+                            add_shopping_cart
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {products.filter(
+              (product) =>
+                !selectedCategory ||
+                product.category === selectedCategory
+            ).length === 0 && (
+              <div className="no-products">
                 <span className="material-symbols-outlined">
-                  category
+                  inventory_2
                 </span>
-                Categories
-              </a>
+                <h3>No products found</h3>
+                <p>Try another category.</p>
+              </div>
+            )}
+          </main>
+        </>
+      ) : (
+        /* CART */
+        <main className="cart-page">
+          <button
+            className="back-shopping"
+            onClick={goHome}
+          >
+            <span className="material-symbols-outlined">
+              arrow_back
+            </span>
+            Continue Shopping
+          </button>
 
-              <button
-                className="cart-nav-btn"
-                onClick={() => {
-                  setShowCart(true);
-                  setShowCheckout(false);
-                }}
-              >
+          <div className="cart-header">
+            <div>
+              <span className="eyebrow">YOUR BAG</span>
+              <h1>Shopping Cart</h1>
+            </div>
+
+            <span>{cartCount} Items</span>
+          </div>
+
+          {cart.length === 0 ? (
+            <div className="empty-cart">
+              <div className="empty-cart-icon">
                 <span className="material-symbols-outlined">
                   shopping_cart
                 </span>
+              </div>
 
-                Cart ({cartCount})
-              </button>
+              <h2>Your cart is empty</h2>
 
-              <button className="menu-btn">
-                <span className="material-symbols-outlined">
-                  menu
-                </span>
+              <p>
+                Looks like you haven't added anything yet.
+              </p>
+
+              <button
+                className="primary-btn"
+                onClick={goHome}
+              >
+                Start Shopping
               </button>
             </div>
-          </nav>
+          ) : (
+            <div className="cart-layout">
+              <div className="cart-items">
+                {cart.map((item) => (
+                  <div
+                    className="cart-item"
+                    key={item._id}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                    />
 
-          {/* OFFER BAR */}
-          <div className="offer-bar">
-            <div className="offer-content">
-              <span>🔥 50% OFF on Fashion Products</span>
-              <span>🎉 New Collection Arrived</span>
-              <span>💻 Laptop Special Discount</span>
-              <span>🏠 Home Decoration Sale</span>
-              <span>🏋️ Gym Equipment Offers</span>
+                    <div className="cart-details">
+                      <span>{item.category}</span>
+
+                      <h3>{item.name}</h3>
+
+                      <p>₹{item.price}</p>
+
+                      <div className="cart-actions">
+                        <div className="quantity">
+                          <button
+                            onClick={() =>
+                              decreaseQuantity(
+                                item._id
+                              )
+                            }
+                          >
+                            −
+                          </button>
+
+                          <span>{item.quantity}</span>
+
+                          <button
+                            onClick={() =>
+                              increaseQuantity(
+                                item._id
+                              )
+                            }
+                          >
+                            +
+                          </button>
+                        </div>
+
+                        <button
+                          className="remove-btn"
+                          onClick={() =>
+                            removeFromCart(item._id)
+                          }
+                        >
+                          <span className="material-symbols-outlined">
+                            delete
+                          </span>
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+
+                    <strong className="item-total">
+                      ₹{item.price * item.quantity}
+                    </strong>
+                  </div>
+                ))}
+              </div>
+
+              <aside className="cart-summary">
+                <span className="eyebrow">ORDER SUMMARY</span>
+
+                <h2>Summary</h2>
+
+                <div className="summary-row">
+                  <span>Subtotal</span>
+                  <strong>₹{totalPrice}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Delivery</span>
+                  <strong>
+                    {totalPrice >= 999 ? "FREE" : "₹49"}
+                  </strong>
+                </div>
+
+                <div className="summary-divider"></div>
+
+                <div className="summary-total">
+                  <span>Total</span>
+                  <strong>
+                    ₹
+                    {totalPrice >= 999
+                      ? totalPrice
+                      : totalPrice + 49}
+                  </strong>
+                </div>
+
+                {!showCheckout && (
+                  <button
+                    className="checkout-btn"
+                    onClick={() =>
+                      setShowCheckout(true)
+                    }
+                  >
+                    Proceed to Checkout
+                    <span className="material-symbols-outlined">
+                      arrow_forward
+                    </span>
+                  </button>
+                )}
+
+                <div className="secure-note">
+                  <span className="material-symbols-outlined">
+                    lock
+                  </span>
+                  Secure & encrypted checkout
+                </div>
+              </aside>
+            </div>
+          )}
+
+          {showCheckout && cart.length > 0 && (
+            <div className="checkout-form">
+              <div className="checkout-heading">
+                <span className="eyebrow">FINAL STEP</span>
+                <h2>Complete Your Order</h2>
+                <p>
+                  Enter your details to place the order.
+                </p>
+              </div>
+
+              <form onSubmit={handleCheckout}>
+                <div className="form-group">
+                  <label>Full Name</label>
+                  <input
+                    type="text"
+                    placeholder="Enter your full name"
+                    value={customer.customerName}
+                    onChange={(e) =>
+                      setCustomer({
+                        ...customer,
+                        customerName:
+                          e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Email Address</label>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={customer.email}
+                    onChange={(e) =>
+                      setCustomer({
+                        ...customer,
+                        email: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Delivery Address</label>
+                  <textarea
+                    placeholder="Enter your complete delivery address"
+                    value={customer.address}
+                    onChange={(e) =>
+                      setCustomer({
+                        ...customer,
+                        address: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="checkout-buttons">
+                  <button
+                    type="button"
+                    className="cancel-checkout"
+                    onClick={() =>
+                      setShowCheckout(false)
+                    }
+                  >
+                    Back
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="place-order-btn"
+                  >
+                    Place Order
+                    <span className="material-symbols-outlined">
+                      check_circle
+                    </span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </main>
+      )}
+
+      {/* FOOTER */}
+      {!showCart && (
+        <footer className="footer">
+          <div className="footer-main">
+            <div className="footer-brand">
+              <div className="footer-logo">
+                <span className="material-symbols-outlined">
+                  storefront
+                </span>
+                BAAZAAR
+              </div>
+
+              <p>
+                Your everyday shopping destination for
+                quality products and great deals.
+              </p>
+            </div>
+
+            <div className="footer-column">
+              <h4>Shop</h4>
+              <button onClick={goProducts}>
+                All Products
+              </button>
+              <button onClick={goCategories}>
+                Categories
+              </button>
+            </div>
+
+            <div className="footer-column">
+              <h4>Help</h4>
+              <span>Easy Returns</span>
+              <span>Secure Shopping</span>
+              <span>Customer Support</span>
+            </div>
+
+            <div className="footer-column">
+              <h4>Categories</h4>
+              {categories.slice(0, 3).map((category) => (
+                <button
+                  key={category.name}
+                  onClick={() =>
+                    setSelectedCategory(category.name)
+                  }
+                >
+                  {category.name}
+                </button>
+              ))}
             </div>
           </div>
 
-          {!showCart ? (
-            <>
-              {/* CATEGORY CHIPS */}
-              <section
-                className="category-chips"
-                id="categories"
-              >
-                <button
-                  className={!selectedCategory ? "active" : ""}
-                  onClick={() => setSelectedCategory(null)}
-                >
-                  All
-                </button>
-
-                {categories.map((category) => (
-                  <button
-                    key={category.name}
-                    className={
-                      selectedCategory === category.name
-                        ? "active"
-                        : ""
-                    }
-                    onClick={() =>
-                      setSelectedCategory(category.name)
-                    }
-                  >
-                    {category.name}
-                  </button>
-                ))}
-              </section>
-
-              {/* FEATURED PRODUCTS */}
-              <section className="categories-section">
-                <h2 className="section-title">
-                  Featured Products
-                </h2>
-
-                <div className="featured-products">
-                  {featuredImages.map((image, index) => (
-                    <div
-                      className="featured-product"
-                      key={index}
-                    >
-                      <img
-                        src={image}
-                        alt={`Featured Product ${index + 1}`}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {/* PRODUCTS */}
-              <main id="products">
-                <h2 className="section-title">
-                  {selectedCategory
-                    ? `${selectedCategory} Products`
-                    : "Our Products"}
-                </h2>
-
-                <div className="product-grid">
-                  {products
-                    .filter(
-                      (product) =>
-                        !selectedCategory ||
-                        product.category === selectedCategory
-                    )
-                    .map((product) => (
-                      <div
-                        className="product-card"
-                        key={product._id}
-                      >
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                        />
-
-                        <div className="product-info">
-                          <h3>{product.name}</h3>
-
-                          <p className="category">
-                            {product.category}
-                          </p>
-
-                          <p>{product.description}</p>
-
-                          <h3>₹{product.price}</h3>
-
-                          <p>Stock: {product.stock}</p>
-
-                          <button
-                            onClick={() =>
-                              addToCart(product)
-                            }
-                          >
-                            Add to Cart
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </main>
-            </>
-          ) : (
-            /* CART */
-            <main className="cart-page">
-              <h2 className="section-title">
-                Shopping Cart
-              </h2>
-
-              {cart.length === 0 ? (
-                <p className="empty-cart">
-                  Your cart is empty.
-                </p>
-              ) : (
-                <>
-                  <div className="cart-items">
-                    {cart.map((item) => (
-                      <div
-                        className="cart-item"
-                        key={item._id}
-                      >
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                        />
-
-                        <div className="cart-details">
-                          <h3>{item.name}</h3>
-
-                          <p>₹{item.price}</p>
-
-                          <div className="quantity">
-                            <button
-                              onClick={() =>
-                                decreaseQuantity(
-                                  item._id
-                                )
-                              }
-                            >
-                              −
-                            </button>
-
-                            <span>{item.quantity}</span>
-
-                            <button
-                              onClick={() =>
-                                increaseQuantity(
-                                  item._id
-                                )
-                              }
-                            >
-                              +
-                            </button>
-                          </div>
-
-                          <button
-                            className="remove-btn"
-                            onClick={() =>
-                              removeFromCart(item._id)
-                            }
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="cart-total">
-                    <h2>Total: ₹{totalPrice}</h2>
-
-                    {!showCheckout && (
-                      <button
-                        onClick={() =>
-                          setShowCheckout(true)
-                        }
-                      >
-                        Proceed to Checkout
-                      </button>
-                    )}
-                  </div>
-
-                  {showCheckout && (
-                    <div className="checkout-form">
-                      <h2>Checkout</h2>
-
-                      <form onSubmit={handleCheckout}>
-                        <input
-                          type="text"
-                          placeholder="Full Name"
-                          value={customer.customerName}
-                          onChange={(e) =>
-                            setCustomer({
-                              ...customer,
-                              customerName:
-                                e.target.value,
-                            })
-                          }
-                          required
-                        />
-
-                        <input
-                          type="email"
-                          placeholder="Email"
-                          value={customer.email}
-                          onChange={(e) =>
-                            setCustomer({
-                              ...customer,
-                              email: e.target.value,
-                            })
-                          }
-                          required
-                        />
-
-                        <textarea
-                          placeholder="Address"
-                          value={customer.address}
-                          onChange={(e) =>
-                            setCustomer({
-                              ...customer,
-                              address: e.target.value,
-                            })
-                          }
-                          required
-                        />
-
-                        <button type="submit">
-                          Place Order
-                        </button>
-                      </form>
-                    </div>
-                  )}
-                </>
-              )}
-            </main>
-          )}
-        </>
+          <div className="footer-bottom">
+            <span>© 2026 Baazaar. All rights reserved.</span>
+            <span>Made for smart shoppers.</span>
+          </div>
+        </footer>
       )}
     </div>
   );
 }
 
 export default App;
+
